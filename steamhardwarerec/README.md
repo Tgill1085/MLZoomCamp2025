@@ -71,9 +71,51 @@ docker run -p 8501:8501 steam-recommender
 Open http://localhost:8501
 Note: The first run (inside Docker) will automatically train the model if missing.
 
-### Option 3: Just Use the Web App
+### Option 4: Just Use the Web App
 No setup needed!
 Go directly to: https://steamgameshardwarerec.streamlit.app
+
+## Deployment
+
+This app is designed for easy deployment on **Streamlit Community Cloud** (free tier available).  
+The trained model (`can_run_model_final.pkl` ≈ 150 MB) is too large for direct Git commit, so it is hosted as a **GitHub Release asset** and automatically downloaded by `predict.py` on first run.
+
+### 1. Upload the Model as a GitHub Release
+
+1. Train your model locally using `train.py` or `notebook.ipynb` to generate `can_run_model_final.pkl`.
+2. Go to your repository: https://github.com/YOUR_USERNAME/YOUR_REPOSITORY
+3. Click **Releases** → **Draft a new release**.
+4. Create a new tag (e.g., `model-v1`).
+5. Add a title like **"Model v1"** and optional description.
+6. Drag and drop `can_run_model_final.pkl` into the assets section.
+7. Click **Publish release**.
+
+> **Important**: The download URL in `predict.py` is currently:  
+> `https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl`  
+> If you change the tag or filename, update the `model_release_url` variable in `predict.py`.
+
+### 2. Deploy to Streamlit Community Cloud
+
+1. Sign up or log in at [https://share.streamlit.io](https://share.streamlit.io)
+2. Click **New app**.
+3. Connect your GitHub repository: `YOUR_USERNAME/YOUR_REPOSITORY`
+4. Set:
+   - **Branch**: `main` (or your preferred branch)
+   - **Main file path**: `YOUR_REPOSITORY/predict.py`
+5. Click **Deploy**.
+
+Streamlit will:
+- Automatically install dependencies from `requirements.txt`
+- Pull the CSV and benchmark files from your repo
+- Download the `.pkl` model from your GitHub Release on first launch (may take ~30–60 seconds)
+
+Your live app URL will look like: `https://your-app-name.streamlit.app`
+
+### Optional: Local Development & Docker
+
+- **Run locally**:  
+  ```bash
+  streamlit run steamhardwarerec/predict.py
 
 ### Project Structure
 ``` text
@@ -130,6 +172,7 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 - **RapidFuzz** – High-performance fuzzy string matching
 - **Streamlit** – Interactive web app
 - **Docker** – Containerized deployment option
+
 
 
 
