@@ -8,7 +8,7 @@
 ## Problem & Motivation
 
 In early 2026, PC gamers face several challenges:
-- **Hardware Pricing Crisis**: GPUs, CPUs, and RAM have become prohibitively expensive due to commercial supply outranking consumer suppy, making PC upgrades and gaming difficult.
+- **Hardware Pricing Crisis**: GPUs, CPUs, and RAM have become prohibitively expensive due to commercial supply outranking consumers, making PC upgrades and gaming difficult.
 - **Lack of Hardware-Based Game Recommendations**: Most tools suggest games by genre or popularity, ignoring whether your actual PC can run them smoothly.
 - **Inconsistent & Messy Data**: Steam system requirements are often vague, outdated, missing, or poorly formatted. Benchmark data is scattered across sites.
 
@@ -22,10 +22,10 @@ It demonstrates end-to-end handling of **real-world messy data**, **imputation**
 
 ## Features
 
-- Enter your CPU, GPU, and RAM and get, 0–100 performance scores
-- Paste any Steam game URL, return "Yes/No" prediction with confidence %
-- View minimum & recommended specs side-by-side
-- Top 20 most popular games you can actually run
+- Enter your CPU, GPU, and RAM and get 0–100 component performance scores
+- Paste any Steam game URL, return "Yes/No" prediction with the model confidence %
+- View minimum & recommended specs side-by-side (if available in data)
+- Listing of the Top 20 most popular games you can actually run
 - Catalog highlights: Top 10 most & least demanding games
 - Fully reproducible pipeline (no large files in repo)
 
@@ -111,7 +111,7 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 
 ## Notes for Reproducibility
 
-- Large files (`steam_games_final.csv` and the trained model `.pkl`) are **not committed** to the repo due to size limits.
+- Large files (the trained model `.pkl`) are **not committed** to the repo due to size limits.
 - They are **generated automatically** on first run.
 - `train.py` checks for required data and trains a fresh model if needed.
 - All scraping and downloading steps are fully automated — no manual file uploads required.
@@ -122,4 +122,5 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 - **RapidFuzz** – High-performance fuzzy string matching
 - **Streamlit** – Interactive web app
 - **Docker** – Containerized deployment option
+
 
