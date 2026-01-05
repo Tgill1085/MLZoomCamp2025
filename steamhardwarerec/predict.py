@@ -8,7 +8,7 @@ import requests
 import subprocess
 
 # === Load data and model ===
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 @st.cache_data(show_spinner="Loading data and model...")
 def load_data():
     csv_path = 'steam_games_final.csv'
