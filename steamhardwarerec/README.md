@@ -9,12 +9,12 @@
 
 In early 2026, PC gamers face several challenges:
 - **Hardware Pricing Crisis**: GPUs, CPUs, and RAM have become prohibitively expensive due to commercial supply outranking consumers, making PC upgrades and gaming difficult.
-- **Lack of Hardware-Based Game Recommendations**: Most tools suggest games by genre or popularity, ignoring whether your actual PC can run them smoothly.
+- **Lack of Non-Invasive Hardware-Based Game Recommendations**: Most tools require a file download, system scan, or suggest games by genre or popularity, ignoring whether your actual PC can run them smoothly.
 - **Inconsistent & Messy Data**: Steam system requirements are often vague, outdated, missing, or poorly formatted. Benchmark data is scattered across sites.
 
 This project solves these by building a **personalized "Can I Run It?" recommender** using:
 - Real 2026 Tom's Hardware CPU/GPU benchmarks
-- Enriched Steam dataset (50,000 games)
+- Filtered and Enriched Steam dataset (50,000 games)
 - Fuzzy matching + rule-based imputation for unmatched hardware
 - Synthetic data + Random Forest ML for accurate compatibility prediction
 
@@ -27,7 +27,7 @@ It demonstrates end-to-end handling of **real-world messy data**, **imputation**
 - View minimum & recommended specs side-by-side (if available in data)
 - Listing of the Top 20 most popular games you can actually run
 - Catalog highlights: Top 10 most & least demanding games
-- Fully reproducible pipeline (no large files in repo)
+- Fully reproducible pipeline, and available as a live demo
 
 ## Live Demo
 
@@ -130,6 +130,7 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 - **RapidFuzz** – High-performance fuzzy string matching
 - **Streamlit** – Interactive web app
 - **Docker** – Containerized deployment option
+
 
 
 
