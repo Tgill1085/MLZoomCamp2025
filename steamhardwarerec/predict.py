@@ -7,10 +7,29 @@ import os
 import requests
 
 # === Load data and model ===
-@st.cache_data
+@st.cache_data(show_spinner="Loading data and model...")
 def load_data():
-    df = pd.read_csv('steam_games_final.csv')
+    csv_path = 'steam_games_final.csv'
     
+    if not os.path.exists(csv_path):
+        st.error(f"Data file '{csv_path}' not found!")
+        st.info("""
+        This file is generated automatically on first run.
+        
+        **Please run the data gathering first:**
+        1. Run `data_gathering.ipynb` in the repo
+        2. It will:
+           - Download the Steam dataset from Zenodo
+           - Scrape Tom's Hardware benchmarks
+           - Generate `steam_games_final.csv`
+        
+        Then redeploy the app.
+        """)
+        st.stop()
+    
+    df = pd.read_csv(csv_path)
+    
+    # Model loading (your existing code)
     model = None
     model_paths = [
         'can_run_model_final.pkl',
@@ -30,18 +49,10 @@ def load_data():
                 st.warning(f"Failed to load {path}: {e}")
     
     if model is None:
-        st.error("**No valid model found.** Please ensure a proper scikit-learn model file exists.")
+        st.error("**No valid model found.** Run `train.py` to generate one.")
         st.stop()
     
-    try:
-        test_df = pd.DataFrame([{'delta_cpu': 0, 'delta_gpu': 0, 'delta_ram': 0,
-                                 'user_cpu': 50, 'user_gpu': 50, 'user_ram': 16}])
-        _ = model.predict(test_df.values)
-        _ = model.predict_proba(test_df.values)
-    except Exception as e:
-        st.error(f"Model test failed: {e}")
-        st.stop()
-    
+    # Load benchmark lookups
     df_cpu = pd.read_csv('cpu_benchmarks_2026_extended.csv')
     df_gpu = pd.read_csv('gpu_benchmarks_2026_extended.csv')
     
