@@ -5,6 +5,7 @@ import joblib
 import re
 import os
 import requests
+import subprocess
 
 # === Load data and model ===
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -50,8 +51,15 @@ def load_data():
                 st.warning(f"Failed to load {path}: {e}")
     
     if model is None:
-        st.error("**No valid model found.** Run `train.py` to generate one.")
-        st.stop()
+        st.warning("Model not found — training a new one (this takes 1-2 minutes)...")
+        result = subprocess.run(["python", "train.py"], capture_output=True, text=True)
+        st.code(result.stdout)
+        if result.returncode == 0:
+            model = joblib.load('can_run_model_final.pkl')
+            st.success("Model trained and loaded!")
+        else:
+            st.error("Training failed. Check logs above.")
+            st.stop()
     
     # Load benchmark lookups
     df_cpu = pd.read_csv('cpu_benchmarks_2026_extended.csv')
