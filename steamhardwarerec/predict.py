@@ -7,58 +7,55 @@ import os
 import requests
 import urllib.request
 
-# === Fix working directory to script location ===
+# === Get script directory (safe, no chdir) ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(script_dir)
 
 # === Load data and model ===
 @st.cache_data(show_spinner="Loading data and model...")
 def load_data():
-    # CSV path
-    csv_path = 'steam_games_final.csv'
+    # All paths relative to script location
+    csv_path = os.path.join(script_dir, 'steam_games_final.csv')
     
     if not os.path.exists(csv_path):
-        st.error(f"Data file '{csv_path}' not found!")
+        st.error(f"Data file 'steam_games_final.csv' not found!")
         st.info("""
         This file should be in the repository.
-        If missing, please run the data gathering notebook locally and push the generated file.
+        Please ensure it is committed and pushed.
         """)
         st.stop()
     
     df = pd.read_csv(csv_path)
     
-    # Model loading with download from GitHub Release
-    model_path = 'can_run_model_final.pkl'
-    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl"  # UPDATE THIS after creating release
+    # Model with download from GitHub Release
+    model_path = os.path.join(script_dir, 'can_run_model_final.pkl')
+    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl"  # UPDATE AFTER RELEASE
     
     model = None
     
     if os.path.exists(model_path):
         try:
             model = joblib.load(model_path)
-            st.success("Pre-trained model loaded from local file!")
+            st.success("Pre-trained model loaded!")
         except Exception as e:
-            st.warning(f"Local model corrupted: {e}")
-            model = None
+            st.warning(f"Local model failed: {e}")
     
     if model is None:
-        st.info("Model not found locally — downloading from GitHub (~150 MB)...")
-        with st.spinner("Downloading model..."):
+        st.info("Downloading model from GitHub (~150 MB)...")
+        with st.spinner("Downloading..."):
             try:
                 urllib.request.urlretrieve(model_release_url, model_path)
                 model = joblib.load(model_path)
                 st.success("Model downloaded and loaded!")
             except Exception as e:
-                st.error(f"Failed to download/load model: {e}")
-                st.error("Please check the release URL in the code.")
+                st.error(f"Download failed: {e}")
                 st.stop()
     
-    # Load benchmark lookups
-    cpu_csv = 'cpu_benchmarks_2026_extended.csv'
-    gpu_csv = 'gpu_benchmarks_2026_extended.csv'
+    # Benchmark files
+    cpu_csv = os.path.join(script_dir, 'cpu_benchmarks_2026_extended.csv')
+    gpu_csv = os.path.join(script_dir, 'gpu_benchmarks_2026_extended.csv')
     
     if not os.path.exists(cpu_csv) or not os.path.exists(gpu_csv):
-        st.error("Benchmark files missing. Please ensure they are in the repo.")
+        st.error("Benchmark files missing.")
         st.stop()
     
     df_cpu = pd.read_csv(cpu_csv)
@@ -72,7 +69,6 @@ def load_data():
     
     return df, model, cpu_lookup, gpu_lookup, cpu_manufacturers, gpu_manufacturers, df_cpu, df_gpu
 
-# Load everything
 df_steam, model, cpu_lookup, gpu_lookup, cpu_manufacturers, gpu_manufacturers, df_cpu, df_gpu = load_data()
 
 df_valid = df_steam[df_steam['intensity'] > 10].copy()
