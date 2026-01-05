@@ -7,28 +7,25 @@ import os
 import requests
 import urllib.request
 
-# === Get script directory (safe, no chdir) ===
+# === Get script directory safely (no chdir) ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # === Load data and model ===
 @st.cache_data(show_spinner="Loading data and model...")
 def load_data():
-    # All paths relative to script location
+    # Data file
     csv_path = os.path.join(script_dir, 'steam_games_final.csv')
     
     if not os.path.exists(csv_path):
-        st.error(f"Data file 'steam_games_final.csv' not found!")
-        st.info("""
-        This file should be in the repository.
-        Please ensure it is committed and pushed.
-        """)
+        st.error("Data file 'steam_games_final.csv' not found!")
+        st.info("This file should be in the repository. Please run data_gathering.ipynb locally and push it.")
         st.stop()
     
     df = pd.read_csv(csv_path)
     
-    # Model with download from GitHub Release
+    # Model loading with GitHub Release fallback
     model_path = os.path.join(script_dir, 'can_run_model_final.pkl')
-    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl"  # UPDATE AFTER RELEASE
+    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/v1.0-model/can_run_model_final.pkl"  # UPDATE AFTER RELEASE
     
     model = None
     
@@ -40,14 +37,15 @@ def load_data():
             st.warning(f"Local model failed: {e}")
     
     if model is None:
-        st.info("Downloading model from GitHub (~150 MB)...")
-        with st.spinner("Downloading..."):
+        st.info("Model not found — downloading from GitHub (~150 MB)...")
+        with st.spinner("Downloading model..."):
             try:
                 urllib.request.urlretrieve(model_release_url, model_path)
                 model = joblib.load(model_path)
                 st.success("Model downloaded and loaded!")
             except Exception as e:
                 st.error(f"Download failed: {e}")
+                st.error("Check the release URL in the code.")
                 st.stop()
     
     # Benchmark files
@@ -75,7 +73,7 @@ df_valid = df_steam[df_steam['intensity'] > 10].copy()
 if len(df_valid) == 0:
     df_valid = df_steam.copy()
 
-# === Header image helper (cached) ===
+# === Header image helper ===
 @st.cache_data(ttl=3600)
 def get_header_url(appid):
     api_url = f"https://store.steampowered.com/api/appdetails?appids={appid}"
@@ -347,5 +345,23 @@ if check_pressed or req_pressed:
                 st.image(thumb, use_column_width=True)
                 st.markdown(f"**[{row['name']}](https://store.steampowered.com/app/{row['appid']}/)**")
                 st.caption(f"Confidence: {row['confidence']*100:.1f}%")
+
+# Global catalog highlights
+with st.expander("📊 Catalog Highlights (Top 10 Most & Least Demanding Games)", expanded=True):
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Top 10 Most Demanding")
+        for _, row in df_valid.nlargest(10, 'intensity').iterrows():
+            thumb = get_header_url(row['appid'])
+            st.image(thumb, width=200)
+            st.caption(f"**{row['name']}** — Intensity: {row['intensity']:.1f}")
+    
+    with col2:
+        st.subheader("Top 10 Least Demanding")
+        for _, row in df_valid.nsmallest(10, 'intensity').iterrows():
+            thumb = get_header_url(row['appid'])
+            st.image(thumb, width=200)
+            st.caption(f"**{row['name']}** — Intensity: {row['intensity']:.1f}")
 
 st.caption("Built with Tom's Hardware 2026 benchmarks • Steam data • scikit-learn • Streamlit")
