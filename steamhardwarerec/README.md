@@ -75,16 +75,24 @@ Note: The first run (inside Docker) will automatically train the model if missin
 No setup needed!
 Go directly to: https://steamgameshardwarerec.streamlit.app
 
+### Project Structure
 ``` text
 .
-├── data_gathering.ipynb          # Scrapes benchmarks + processes Steam data
-├── notebook.ipynb                # Feature engineering, modeling, analysis
-├── train.py                      # Standalone: trains and saves model
-├── predict.py                    # Streamlit web app
-├── requirements.txt              # Dependencies
-├── Dockerfile                    # Containerized deployment
-├── steam_games_final.csv         # Generated enriched data (created on run)
-└── can_run_model_final.pkl       # Trained model (generated on first run)
+├── data_gathering.ipynb                  # Scrapes benchmark data + processes/enriches Steam games
+├── notebook.ipynb                        # Exploratory analysis, feature engineering, and modeling
+├── train.py                              # Standalone script: trains and saves the ML model
+├── predict.py                            # Streamlit web app (main deployed application)
+├── requirements.txt                      # Python dependencies
+├── Dockerfile                            # For containerized deployment (e.g., Streamlit Cloud, Docker)
+├── .dockerignore                         # Files to exclude from Docker build
+├── cpu_benchmarks_2026.csv               # Raw CPU benchmark data from scraping
+├── cpu_benchmarks_2026_extended.csv      # Extended/cleaned CPU dataset used in app
+├── gpu_benchmarks_2026.csv               # Raw GPU benchmark data from scraping
+├── gpu_benchmarks_2026_extended.csv      # Extended/cleaned GPU dataset used in app
+├── steam_games_final.csv                 # Final enriched Steam dataset with parsed specs and intensity scores
+├── steam_games_slim.csv                  # Slimmed-down version of Steam application data
+├── can_run_model_final.pkl               # Trained ML model (downloaded from GitHub Release on first run if missing)
+└── app-screenshot.png                    # Screenshot of the deployed Streamlit app
 ```
 
 ## How It Works
@@ -98,7 +106,7 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 3. **Intensity Scoring**  
    Computes a weighted demand score for each game:  
    **70% GPU** + **20% CPU** + **10% RAM**  
-   (Higher = more demanding)
+   (Higher Scoring = more demanding game)
 
 4. **Synthetic Training**  
    Generates 100,000 balanced user-game pairs to train the model on realistic "can run / cannot run" scenarios.
@@ -111,8 +119,8 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 
 ## Notes for Reproducibility
 
-- Large files (the trained model `.pkl`) are **not committed** to the repo due to size limits.
-- They are **generated automatically** on first run.
+- The Large model file is either generated automatically on the first run, or can be found under releases:
+    - [Trained Model v1](https://github.com/Tgill1085/MLZoomCamp2025/releases/tag/model-v1).
 - `train.py` checks for required data and trains a fresh model if needed.
 - All scraping and downloading steps are fully automated — no manual file uploads required.
 
@@ -122,6 +130,7 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 - **RapidFuzz** – High-performance fuzzy string matching
 - **Streamlit** – Interactive web app
 - **Docker** – Containerized deployment option
+
 
 
 
