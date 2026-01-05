@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+pip-delete-this-directory.txt
+*.egg-info
+.git
+.gitignore
+README.md
+.dockerignore
+Dockerfile

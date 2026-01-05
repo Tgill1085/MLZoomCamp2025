@@ -1,0 +1,28 @@
+cpu_name,manufacturer,gaming_score,architecture,cores_threads,base_boost_ghz,tdp,price_current,product_full,perf_score
+Ryzen 7 9800X3D,AMD,100.0,Zen 5,8 / 16,4.7 / 5.2,120W / 162W,$472,Ryzen 7 9800X3D ($480),100.0
+Ryzen 7 7800X3D,AMD,87.18,Zen 4,8 / 16,4.2 / 5.0,120W / 162W,$381,Ryzen 7 7800X3D ($449),87.18
+Ryzen 9 7950X3D,AMD,85.75,Zen 4,16 / 32,4.2 / 5.7,120W / 162W,$685,Ryzen 9 7950X3D ($699),85.75
+Ryzen 5 7600X3D,AMD,81.3,Zen 4,6 / 12,4.1 / 4.7,65W / 88W,Microcenter,Ryzen 5 7600X3D ($299),81.3
+Ryzen 9 7900X3D,AMD,79.94,Zen 4,12 / 24,4.4 / 5.6,120W / 162W,Out of Stock,Ryzen 9 7900X3D ($599),79.94
+Core i9-14900K,Intel,77.1,Raptor Lake Refresh,24 / 32 (8+16),3.2 / 6.0,125W / 253W,$438,Core i9-14900K ($549),77.1
+Ryzen 7 9700X,AMD,76.74,Zen 5,8 /16,3.8 / 5.5,65W / 88W / 105W,$309,Ryzen 7 9700X ($359),76.74
+Ryzen 9 9950X,AMD,76.67,Zen 5,16 / 32,4.3 / 5.7,170W / 230W,$520,Ryzen 9 9950X ($649),76.67
+Core i7-14700K,Intel,75.76,Raptor Lake Refresh,20 / 28,3.4 / 5.6,125W / 253W,$303,Core i7-14700K ($409),75.76
+Core i9-13900K,Intel,75.4,Raptor Lake,24 / 32 (8+16),3.0 / 5.8,125W / 253W,$428,Core i9-13900K ($589),75.4
+Core i7-13700K,Intel,74.94,Raptor Lake,16 / 24 (8+8),3.4 / 5.4,125W / 253W,$345,Core i7-13700K ($275),74.94
+Core 9 285K CU-8200,Intel,74.17,Arrow Lake,24 / 24 (8+16),3.7 / 5.7,125W / 250W,$573,Core 9 285K CU-8200 | DDR5-7200 ($589),74.17
+Ryzen 9 9900X,AMD,74.09,Zen 5,12 / 24,4.4 / 5.6,120W / 162W,$370,Ryzen 9 9900X ($499),74.09
+Ryzen 5 9600X,AMD,72.81,Zen 5,6 / 12,3.9 / 5.4,65W / 88W,$207,Ryzen 5 9600X ($279),72.81
+Ryzen 9 7950X,AMD,71.65,Zen 4,16 / 32,4.5 / 5.7,170W / 230W,$488,Ryzen 9 7950X ($569),71.65
+Core 7 265K CU-8200,Intel,70.77,Arrow Lake,20 / 20 (8+12),3.9 / 5.5,125W / 250W,$298,Core 7 265K CU-8200 | DDR5-7200 ($394),70.77
+Core i5-14600K,Intel,70.61,Raptor Lake Refresh,14 / 20,3.5 / 5.3,125W / 181W,$192,Core i5-14600K ($319),70.61
+Ryzen 9 7900X,AMD,69.71,Zen 4,12 / 24,4.7 / 5.6,170W / 230W,$335,Ryzen 9 7900X ($474),69.71
+Core i5-13600K,Intel,68.64,Raptor Lake,14 / 20 (6+8),3.5 / 5.1,125W / 181W,$265,Core i5-13600K ($225),68.64
+Ryzen 7 7700X,AMD,68.33,Zen 4,8 / 16,4.5 / 5.4,105W / 142W,$276,Ryzen 7 7700X ($349),68.33
+Ryzen 7 5700X3D,AMD,67.46,Zen 3,8 / 16,3.0 / 4.1,105W / 142W,$262,Ryzen 7 5700X3D ($229),67.46
+Core 5 245K CU-8200,Intel,67.39,Arrow Lake,14 / 14 (6+8),4.2 / 5.2,125W / 250W,$279,Core 5 245K CU-8200 | DDR5-7200 ($309),67.39
+Core i9-12900K,Intel,66.92,Alder Lake,16 / 24 (8+8),3.2 / 5.2,125W / 241W,Out of Stock,Core i9-12900K ($589),66.92
+Ryzen 5 7600X,AMD,65.62,Zen 4,6 / 12,4.7 / 5.3,105W / 142W,$209,Ryzen 5 7600X ($249),65.62
+Core i7-12700K,Intel,63.06,Alder Lake,12 / 20 (8+4),3.6 / 5.0,125W / 190W,$197,Core i7-12700K ($209),63.06
+Core i5-12600K,Intel,58.61,Alder Lake,10 / 16 (6+4),3.7 / 4.9,125W / 150W,$150,Core i5-12600K ($150),58.61
+Core i5-14400,Intel,52.67,Raptor Lake Refresh,10 / 16 (6+4),2.5 / 4.7,65W / 148W,$176,Core i5-14400 ($225),52.67
