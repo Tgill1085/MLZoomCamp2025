@@ -1,4 +1,4 @@
-# Steam Hardware Recommender
+# Steam Games based on Hardware Recommender
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://steamgameshardwarerec.streamlit.app)  
 *A machine learning-powered tool to recommend Steam games based on your PC hardware.*
@@ -122,3 +122,4 @@ Go directly to: https://steamgameshardwarerec.streamlit.app
 - **RapidFuzz** – High-performance fuzzy string matching
 - **Streamlit** – Interactive web app
 - **Docker** – Containerized deployment option
+
