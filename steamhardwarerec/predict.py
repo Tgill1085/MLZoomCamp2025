@@ -29,7 +29,7 @@ def load_data():
     
     # Model loading with download from GitHub Release
     model_path = 'can_run_model_final.pkl'
-    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/v1.0-model/can_run_model_final.pkl"  # UPDATE THIS after creating release
+    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl"  # UPDATE THIS after creating release
     
     model = None
     
