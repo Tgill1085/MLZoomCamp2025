@@ -624,5 +624,16 @@ with st.expander("Catalog Highlights (Top 10 Most & Least Demanding Games)", exp
             """
             st.markdown(card, unsafe_allow_html=True)
 
-st.caption("Built with Tom's Hardware 2026 benchmarks • vintagedon Steam dataset • scikit-learn • Streamlit")
-st.caption("Full project README at: https://github.com/Tgill1085/MLZoomCamp2025/tree/main/steamhardwarerec#readme")
+st.caption(
+    """
+    Built with 
+    **[Tom's Hardware 2026 Benchmarks](https://www.tomshardware.com/reviews/cpu-hierarchy,4312.html)** • 
+    **[vintagedon Steam Dataset](https://github.com/vintagedon/steam-dataset-2025)** • 
+    **[scikit-learn](https://scikit-learn.org/stable/)** • 
+    **[Streamlit](https://streamlit.io)**
+    """
+)
+
+st.caption(
+    "[**Full Project README Here** ➜](https://github.com/Tgill1085/MLZoomCamp2025/tree/main/steamhardwarerec#readme)"
+)
