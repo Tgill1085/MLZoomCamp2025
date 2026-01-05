@@ -18,14 +18,14 @@ def load_data():
     
     if not os.path.exists(csv_path):
         st.error("Data file 'steam_games_final.csv' not found!")
-        st.info("This file should be in the repository. Please run data_gathering.ipynb locally and push it.")
+        st.info("This file should be in the repository. Run data_gathering.ipynb locally and push it.")
         st.stop()
     
     df = pd.read_csv(csv_path)
     
     # Model loading with GitHub Release fallback
     model_path = os.path.join(script_dir, 'can_run_model_final.pkl')
-    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl"  # UPDATE AFTER RELEASE
+    model_release_url = "https://github.com/Tgill1085/MLZoomCamp2025/releases/download/model-v1/can_run_model_final.pkl"
     
     model = None
     
