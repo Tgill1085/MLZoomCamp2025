@@ -71,7 +71,7 @@ docker run -p 8501:8501 steam-recommender
 Open http://localhost:8501
 Note: The first run (inside Docker) will automatically train the model if missing.
 
-### Option 4: Just Use the Web App
+### Option 3: Just Use the Web App
 No setup needed!
 Go directly to: https://steamgameshardwarerec.streamlit.app
 
@@ -172,6 +172,7 @@ Your live app URL will look like: `https://your-app-name.streamlit.app`
 - **RapidFuzz** – High-performance fuzzy string matching
 - **Streamlit** – Interactive web app
 - **Docker** – Containerized deployment option
+
 
 
 
