@@ -625,3 +625,4 @@ with st.expander("Catalog Highlights (Top 10 Most & Least Demanding Games)", exp
             st.markdown(card, unsafe_allow_html=True)
 
 st.caption("Built with Tom's Hardware 2026 benchmarks • vintagedon Steam dataset • scikit-learn • Streamlit")
+st.caption("Full project README at: https://github.com/Tgill1085/MLZoomCamp2025/tree/main/steamhardwarerec#readme")
