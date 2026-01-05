@@ -31,17 +31,17 @@ def load_data():
     if os.path.exists(model_path):
         try:
             model = joblib.load(model_path)
-            st.success("Pre-trained model loaded!")
+            st.spinner("Pre-trained model loaded!")
         except Exception as e:
             st.warning(f"Local model failed: {e}")
     
     if model is None:
-        st.info("Model not found — downloading from GitHub (~150 MB)...")
+        st.spinner("Model not found — downloading from GitHub (~150 MB)...")
         with st.spinner("Downloading model..."):
             try:
                 urllib.request.urlretrieve(model_release_url, model_path)
                 model = joblib.load(model_path)
-                st.success("Model downloaded and loaded!")
+                st.spinner("Model downloaded and loaded!")
             except Exception as e:
                 st.error(f"Download failed: {e}")
                 st.error("Check the release URL in the code.")
@@ -206,6 +206,38 @@ st.title("Steam Games based on Hardware Recommender")
 st.markdown("Enter your PC specs to discover what games you can run — powered by benchmark data and machine learning.")
 
 st.markdown("### Your CPU, GPU and RAM")
+
+# Help dialog using native Streamlit modal
+@st.dialog("How to Find Your PC Specs on Windows")
+def show_how_to_find_specs():
+    st.markdown("""
+    ###     
+    Follow these simple steps to find your CPU, RAM, and GPU:
+    
+    1. Press **Windows key + R** to open the Run dialog  
+       - `msinfo32` and press Enter. This opens **System Information**  
+           - Look for **System Summary** on the left panel, and in the right panel section look for:  
+               - `Processor` → This is your CPU model (e.g., "AMD Ryzen 7 7800X3D" or "Intel Core i7-13700K")  
+               - `Installed Physical Memory (RAM)` → This shows your RAM in GB (e.g., "32.0 GB")
+           - Expand **Components -> Display** on the left panel and in the right panel section, look for:
+               - `Name` → This shows your GPU model (e.g., "NVIDIA GeForce RTX 4070") 
+    
+    Alternative ways to find GPU:  
+    1. Right-click on your Desktop, select `Display settings`  
+       - Scroll down, click `Advanced display settings` 
+       - Click `Display adapter properties`  
+           - The **Adapter Type** listed at the top of the new window shows your GPU model (e.g., "NVIDIA GeForce RTX 4070")  
+    2. Search for **Device Manager** in the Start menu
+       - Expand `Display adapters`
+       - Find your GPU Model Name in the listed Adapters (e.g., "NVIDIA GeForce RTX 4070")
+    """)
+    
+    if st.button("Close", type="primary", use_container_width=True):
+        st.rerun()  # Closes the modal
+
+# Button to open the help modal (placed next to the section title)
+if st.button("How to find my components?"):
+    show_how_to_find_specs()
 
 hw_col1, hw_col2 = st.columns(2)
 
