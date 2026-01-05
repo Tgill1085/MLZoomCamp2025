@@ -205,39 +205,120 @@ st.set_page_config(page_title="Steam Games based on Hardware Recommender", layou
 st.title("Steam Games based on Hardware Recommender")
 st.markdown("Enter your PC specs to discover what games you can run — powered by benchmark data and machine learning.")
 
-st.markdown("### Your CPU, GPU and RAM")
+# === Define the dialogs FIRST (before any buttons try to call them) ===
 
-# Help dialog using native Streamlit modal
 @st.dialog("How to Find Your PC Specs on Windows")
-def show_how_to_find_specs():
+def show_components_help():
     st.markdown("""
-    ###     
-    Follow these simple steps to find your CPU, RAM, and GPU:
+    ### How to Find Your CPU, GPU, and RAM on Windows
     
-    1. Press **Windows key + R** to open the Run dialog  
-       - `msinfo32` and press Enter. This opens **System Information**  
-           - Look for **System Summary** on the left panel, and in the right panel section look for:  
-               - `Processor` → This is your CPU model (e.g., "AMD Ryzen 7 7800X3D" or "Intel Core i7-13700K")  
-               - `Installed Physical Memory (RAM)` → This shows your RAM in GB (e.g., "32.0 GB")
-           - Expand **Components -> Display** on the left panel and in the right panel section, look for:
-               - `Name` → This shows your GPU model (e.g., "NVIDIA GeForce RTX 4070") 
+    Follow these steps to quickly locate your hardware details:
     
-    Alternative ways to find GPU:  
-    1. Right-click on your Desktop, select `Display settings`  
-       - Scroll down, click `Advanced display settings` 
-       - Click `Display adapter properties`  
-           - The **Adapter Type** listed at the top of the new window shows your GPU model (e.g., "NVIDIA GeForce RTX 4070")  
-    2. Search for **Device Manager** in the Start menu
-       - Expand `Display adapters`
-       - Find your GPU Model Name in the listed Adapters (e.g., "NVIDIA GeForce RTX 4070")
+    **Best Method – System Information:**
+    1. Press **Windows key + R** 
+       - type `msinfo32` and press Enter.
+    2. Under **System Summary** (default view on left panel) check the right panel for:
+       - `Processor` - for your full CPU model (e.g., "AMD Ryzen 7 7800X3D").
+       - `Installed Physical Memory (RAM)` -  for your Total RAM (e.g., "32.0 GB").
+    3. In the left panel list, expand **Components** and click on **Display**:
+       - `Name` - For your GPU model (e.g., "NVIDIA GeForce RTX 4070").
+    
+    **Alternative for GPU:**
+    1. Right-click Desktop and click **Display settings** 
+       - Scroll down in this window and click on **Advanced display settings**
+       - Click on **Display adapter properties**, which opens another window 
+       - Find `Adapter Type` displaying the full GPU Model at the top of the window.
+    2. Search Start Menu or Settings for **Device Manager**
+       - In the left panel, expand `Display adapters`
+       - Find Full GPU Model name in list of adapters
     """)
     
     if st.button("Close", type="primary", use_container_width=True):
-        st.rerun()  # Closes the modal
+        st.rerun()
 
-# Button to open the help modal (placed next to the section title)
-if st.button("How to find my components?"):
-    show_how_to_find_specs()
+@st.dialog("How to Use This Site")
+def show_usage_help():
+    st.markdown("""
+    ### Four Ways to Use This Recommender
+    
+    1. **Get General Recommendations**  
+       - Enter your CPU, GPU, and RAM.  
+       - Click `Get Single Steam Game Analysis and/or Steam Games Recommendations`.  
+       - You'll see the top 20 most popular games your PC can likely run (plus a total from the catalogue count out of 50,000 games).
+    
+    2. **Check a Specific Game + Get Recommendations**  
+       - Enter your hardware specs.  
+       - Paste a **Steam store URL** (e.g., https://store.steampowered.com/app/...).  
+       - Click `Get Single Steam Game Analysis and/or Steam Games Recommendations`.  
+       - See if your PC can run it (with confidence scores) **plus** your system's top 20 list.
+    
+    3. **Just View a Game's System Requirements**  
+       - Paste a Steam store URL (hardware entry optional).  
+       - Click `Just Get Single Steam Game Requirements`.  
+       - Displays the official minimum and recommended specs (no prediction needed).
+
+    4. **Browse the Top 10 and Bottom 10 Games**
+       - When you visit the site, you can find the list of the most system intensive games and the least intensive games listed below the input form. 
+    
+    **Tip:** Confidence ≥70% = very likely to run well · 50–70% = probably with lower settings, see more under `How to read the results?`.
+    """)
+    
+    if st.button("Close", type="primary", use_container_width=True):
+        st.rerun()
+
+@st.dialog("How to Read the Results")
+def show_results_help():
+    st.markdown("""
+    # Understanding the Results
+    
+    1. ### **Performance Score (0–100)**  
+    Your CPU and GPU get a relative gaming performance score based on 2026 benchmarks. 
+    #### GPU Examples: 
+       - RTX 4090 ≈ `95–100` 
+       - RTX 3070 ≈ `70–80`  
+       - GTX 1050 ≈ `20–30`
+    
+    2. ### **Intensity Score** (shown in catalog highlights) 
+    #### How demanding a game's requirements are overall (Higher scores means it needs better hardware).    
+       - GPU Requirement:     **50%** Weight
+       - CPU Requirement:     **30%** Weight
+       - RAM Requirement:     **20%** Weight
+    
+    
+    3. ### **Confidence Score** (when checking a game or recommendations)  
+    #### Machine learning prediction of how well your PC can run the game smoothly:  
+       - `≥70%` : Very likely to run well at decent settings  
+       - `50–70%` : Probably yes, but may need lower settings/resolution  
+       - `<50%` : Unlikely to run smoothly
+    
+    ### **Top 20 List**  
+    Sorted by Steam user recommendations (most popular first) — only games your system is predicted to run.
+    """)
+    
+    if st.button("Close", type="primary", use_container_width=True):
+        st.rerun()
+
+# === Three help buttons side-by-side ===
+help_col1, help_col2, help_col3, help_col4 = st.columns([1, 1, 1, 1])
+
+with help_col1:
+    if st.button("How to find my components?", use_container_width=True):
+        show_components_help()
+
+with help_col2:
+    if st.button("How to use this site?", use_container_width=True):
+        show_usage_help()
+
+with help_col3:
+    if st.button("How to read the results?", use_container_width=True):
+        show_results_help()
+
+# Optional: empty column for spacing if you want them more centered
+with help_col4:
+    st.write("")  # Keeps symmetric spacing
+
+# === Now the main hardware input section ===
+st.markdown("### Your CPU, GPU and RAM")
 
 hw_col1, hw_col2 = st.columns(2)
 
@@ -293,13 +374,13 @@ st.markdown(
 )
 st.markdown("---")
 
-st.subheader("Can my system run this?")
+st.subheader("Can my system run this Steam Game?")
 game_url = st.text_input("Enter Steam Game URL", placeholder="e.g., https://store.steampowered.com/app/1903340/Clair_Obscur_Expedition_33/", label_visibility="collapsed")
 st.markdown("---")
 
 btn_col1, btn_col2, _ = st.columns([1, 1, 2])
 with btn_col1:
-    recommend_pressed = st.button("Get Single Steam Game or General Steam Games Recommendations", type="primary", use_container_width=True)
+    recommend_pressed = st.button("Get Single Steam Game Analysis and/or Steam Games Recommendations", type="primary", use_container_width=True)
 with btn_col2:
     req_pressed = st.button("Just Get Single Steam Game Requirements", use_container_width=True)
 
@@ -358,24 +439,6 @@ if recommend_pressed or req_pressed:
         unsafe_allow_html=True
     )
     
-    # Explanatory notes
-    with st.expander("ℹ️ How to read the results", expanded=False):
-        st.markdown("""
-        **Performance Score (0–100)**  
-        Your CPU and GPU are scored against 2026 benchmarks (higher = better).  
-        This is a relative gaming performance metric — e.g., RTX 4090 ≈ 95–100, GTX 1050 ≈ 20–30.
-
-        **Intensity Score**  
-        A combined measure of how demanding a game is (CPU + GPU + RAM requirements).  
-        Higher values mean the game needs more powerful hardware. Calculated from benchmark-matched min specs.
-
-        **Confidence Score**  
-        The machine learning model's predicted probability (%) that your system can run the game smoothly at decent settings.  
-        Trained on thousands of hardware-game combos.  
-        • ≥70% = Very likely  
-        • 50–70% = Probably yes (may need lower settings)  
-        • <50% = Unlikely to run well
-        """)
     
     st.markdown("---")
     
@@ -522,7 +585,7 @@ if recommend_pressed or req_pressed:
         st.markdown("---")
 
 # Collapsible global lists — starts expanded on load, collapses after results
-with st.expander("📊 Catalog Highlights (Top 10 Most & Least Demanding Games)", expanded=not (recommend_pressed or req_pressed)):
+with st.expander("Catalog Highlights (Top 10 Most & Least Demanding Games)", expanded=not (recommend_pressed or req_pressed)):
     col1, col2 = st.columns(2)
     
     with col1:
