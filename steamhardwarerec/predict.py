@@ -280,9 +280,9 @@ def show_results_help():
     
     2. ### **Intensity Score** (shown in catalog highlights) 
     #### How demanding a game's requirements are overall (Higher scores means it needs better hardware).    
-       - GPU Requirement:     **50%** Weight
-       - CPU Requirement:     **30%** Weight
-       - RAM Requirement:     **20%** Weight
+       - GPU Requirement:     **70%** Weight
+       - CPU Requirement:     **20%** Weight
+       - RAM Requirement:     **10%** Weight
     
     
     3. ### **Confidence Score** (when checking a game or recommendations)  
